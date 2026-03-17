@@ -3,71 +3,57 @@ import FormInput from "../ui/input";
 import { COLORS } from "../../constants/colors";
 import { ChangeEvent } from "react";
 
-
 interface AuthorsCardProps {
   firstName: string;
   lastName: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-/**
- * AuthorsCard
- * First Name, Last Name inputs + "Add contributors" button.
- */
 export default function AuthorsCard({ firstName, lastName, onChange }: AuthorsCardProps) {
   return (
     <div
+      className="rounded-xl p-6 mb-8 w-full md:w-2/3 lg:w-1/2"
       style={{
         background: COLORS.background.card,
-        borderRadius: "10px",
-        padding: "24px",
-        marginBottom: "32px",
-        width: '50%',
       }}
     >
-      <p style={{ fontWeight: 600, fontSize: "14px", marginBottom: "16px", color: COLORS.text.secondary }}>
+      <p
+        className="font-semibold text-sm mb-4"
+        style={{ color: COLORS.text.secondary }}
+      >
         Author(s)
       </p>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: "16px", maxWidth: "380px" }}>
-        <div style={{ flex: 1 }}>
-          <FormInput 
-            label="First Name" 
-            name="firstName" 
-            value={firstName} 
-            onChange={onChange} 
-            placeholder="" 
+      <div className="flex flex-col md:flex-row gap-4 max-w-xl">
+        <div className="flex-1">
+          <FormInput
+            label="First Name"
+            name="firstName"
+            value={firstName}
+            onChange={onChange}
+            placeholder=""
           />
         </div>
-        <div style={{ flex: 1 }}>
-          <FormInput 
-            label="Last Name" 
-            name="lastName" 
-            value={lastName} 
-            onChange={onChange} 
-            placeholder="" 
+        <div className="flex-1">
+          <FormInput
+            label="Last Name"
+            name="lastName"
+            value={lastName}
+            onChange={onChange}
+            placeholder=""
           />
         </div>
       </div>
 
       <button
         type="button"
+        className="mt-4 bg-transparent border-none cursor-pointer flex items-center gap-2 p-0 font-medium text-sm transition-opacity hover:opacity-80"
         style={{
-          marginTop: "16px",
-          background: "none",
-          border: "none",
           color: COLORS.primary,
-          cursor: "pointer",
-          fontSize: "13px",
-          display: "flex",
-          alignItems: "center",
-          gap: "6px",
-          padding: 0,
-          fontWeight: 500,
         }}
       >
-        <PlusIcon /> Add contributors
+        <PlusIcon size={16} /> Add contributors
       </button>
     </div>
   );
-}
+}

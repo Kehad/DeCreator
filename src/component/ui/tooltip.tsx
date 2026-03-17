@@ -4,65 +4,80 @@ import { COLORS } from "../../constants/colors";
 interface TooltipProps {
   title: string;
   items: string[];
-  side?: "right" | "left";
+  side?: "right" | "left" | "top" | "bottom";
 }
 
-/**
- * Tooltip
- * @param {string}   title  - Bold heading text
- * @param {string[]} items  - Checklist items
- * @param {"right"|"left"} side - Which side the arrow points from
- */
 export default function Tooltip({ title, items, side = "right" }: TooltipProps) {
   const isRight = side === "right";
+  const isLeft = side === "left";
+  const isTop = side === "top";
+  const isBottom = side === "bottom";
 
   return (
     <div
+      className="relative rounded-lg p-4 w-full z-50 shadow-2xl transition-all"
       style={{
-        position: "relative",
-        // top: "50%",
-        // ...(isRight ? { left: "calc(100% + 12px)" } : { right: "calc(100% + 12px)" }),
-        // transform: "translateY(-50%)",
         background: COLORS.special.tooltipBg,
         color: COLORS.background.card,
-        borderRadius: "8px",
-        padding: "14px 16px",
-        width: "100%",
-        zIndex: 50,
-        boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
         fontFamily: "'Georgia', serif",
       }}
     >
-      {/* Arrow */}
+      {/* Arrow - only show on desktop if side is left/right */}
       <div
+        className={`absolute hidden lg:block ${
+          isRight ? "-left-2 top-1/2 -translate-y-1/2" : ""
+        } ${isLeft ? "-right-2 top-1/2 -translate-y-1/2" : ""} ${
+          isTop ? "-bottom-2 left-1/2 -translate-x-1/2" : ""
+        } ${isBottom ? "-top-2 left-1/2 -translate-x-1/2" : ""}`}
         style={{
-          position: "absolute",
-          top: "50%",
-          ...(isRight
-            ? { left: "-8px", borderRight: `8px solid ${COLORS.special.tooltipBg}`, borderLeft: "none" }
-            : { right: "-8px", borderLeft: `8px solid ${COLORS.special.tooltipBg}`, borderRight: "none" }),
-          transform: "translateY(-50%)",
           width: 0,
           height: 0,
-          borderTop: "8px solid transparent",
-          borderBottom: "8px solid transparent",
+          borderStyle: "solid",
+          borderWidth: isTop || isBottom ? "8px 8px 0 8px" : "8px 8px 8px 0",
+          ...(isRight
+            ? {
+                borderColor: `transparent ${COLORS.special.tooltipBg} transparent transparent`,
+                borderWidth: "8px 8px 8px 0",
+              }
+            : {}),
+          ...(isLeft
+            ? {
+                borderColor: `transparent transparent transparent ${COLORS.special.tooltipBg}`,
+                borderWidth: "8px 0 8px 8px",
+              }
+            : {}),
+          ...(isTop
+            ? {
+                borderColor: `${COLORS.special.tooltipBg} transparent transparent transparent`,
+                borderWidth: "8px 8px 0 8px",
+              }
+            : {}),
+          ...(isBottom
+            ? {
+                borderColor: `transparent transparent ${COLORS.special.tooltipBg} transparent`,
+                borderWidth: "0 8px 8px 8px",
+              }
+            : {}),
         }}
       />
 
-      <p style={{ fontWeight: 700, fontSize: "13px", marginBottom: "10px", lineHeight: 1.3 }}>
+      <p className="font-bold text-sm mb-3 underline decoration-black/10 transition-all hover:decoration-black/30">
         {title}
       </p>
 
-      <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "6px" }}>
+      <ul className="list-none p-0 m-0 flex flex-col gap-2">
         {items.map((item, i) => (
-          <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: "8px", fontSize: "12px", lineHeight: 1.4 }}>
-            <span style={{ color: COLORS.status.success, marginTop: "1px", flexShrink: 0 }}>
-              <CheckIcon />
+          <li key={i} className="flex items-start gap-2 text-xs leading-relaxed">
+            <span
+              className="shrink-0 mt-0.5"
+              style={{ color: COLORS.status.success }}
+            >
+              <CheckIcon size={14} strokeWidth={3} />
             </span>
-            {item}
+            <span>{item}</span>
           </li>
         ))}
       </ul>
     </div>
   );
-}
+}

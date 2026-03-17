@@ -1,23 +1,13 @@
-"use client"
+"use client";
 import { CheckIcon, UploadIcon, FileTextIcon } from "lucide-react";
 import { COLORS } from "../../constants/colors";
 import { useRef, useState, ChangeEvent } from "react";
 
-
-
-
-
-
-
 type TipsProps = {
   tips: string[];
   head: string;
-}
+};
 
-/**
- * ManuscriptUploadCard
- * Upload area (left) + ProRes export tips panel (right).
- */
 export default function ManuscriptUploadCard({ tips, head }: TipsProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [fileName, setFileName] = useState<string | null>(null);
@@ -36,30 +26,17 @@ export default function ManuscriptUploadCard({ tips, head }: TipsProps) {
 
   return (
     <div
+      className="rounded-xl p-0 mb-5 flex flex-col lg:flex-row overflow-hidden border border-white/5"
       style={{
         background: COLORS.background.card,
-        borderRadius: "10px",
-        padding: "24px",
-        marginBottom: "20px",
-        display: "flex",
-        gap: "32px",
-        alignItems: "stretch",
       }}
     >
       {/* Drop / upload zone */}
       <div
         onClick={handleUploadClick}
+        className="flex-1 flex flex-col items-center justify-center p-8 lg:p-12 gap-4 cursor-pointer min-h-[160px] border-b lg:border-b-0 lg:border-r transition-colors hover:bg-white/5"
         style={{
-          flex: 1,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "32px 16px",
-          gap: "10px",
-          cursor: "pointer",
-          minHeight: "120px",
-          borderRight: `1px solid ${COLORS.border.light}`,
+          borderColor: COLORS.border.light,
         }}
       >
         <input
@@ -69,62 +46,61 @@ export default function ManuscriptUploadCard({ tips, head }: TipsProps) {
           style={{ display: "none" }}
           accept=".fdx,.pdf,.fountain"
         />
-        
+
         {fileName ? (
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px" }}>
-            <div style={{ color: COLORS.primary, display: "flex", alignItems: "center", gap: "8px" }}>
-              <FileTextIcon size={24} />
-              <span style={{ fontWeight: 600, fontSize: "14px" }}>{fileName}</span>
+          <div className="flex flex-col items-center gap-3 text-center">
+            <div
+              className="flex items-center gap-3"
+              style={{ color: COLORS.primary }}
+            >
+              <FileTextIcon size={28} />
+              <span className="font-semibold text-base">{fileName}</span>
             </div>
-            <p style={{ color: COLORS.text.muted, fontSize: "12px", margin: 0 }}>
-              Click to replace
-            </p>
+            <p className="text-sm opacity-60 m-0">Click to replace</p>
           </div>
         ) : (
           <>
             <button
               type="button"
+              className="bg-transparent rounded-lg px-6 py-3 text-sm cursor-pointer flex items-center gap-2 border font-medium transition-all hover:scale-[1.02]"
               style={{
-                background: COLORS.background.card,
-                border: `1px solid ${COLORS.border.light}`,
+                borderColor: COLORS.border.light,
                 color: COLORS.text.secondary,
-                borderRadius: "6px",
-                padding: "9px 20px",
-                fontSize: "13px",
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
               }}
             >
-              <UploadIcon /> Upload manuscript
+              <UploadIcon size={18} /> Upload manuscript
             </button>
-            <p style={{ color: COLORS.text.muted, fontSize: "12px", margin: 0 }}>
-              FDX, PDF &amp; Fountain format
-            </p>
+            <p className="text-xs opacity-50 m-0">FDX, PDF & Fountain format</p>
           </>
         )}
       </div>
 
       {/* Tips panel */}
-      <div style={{ flex: 1, borderRadius: "8px", padding: "20px" }}>
-        <p style={{ fontWeight: 700, fontSize: "18px", marginBottom: "12px", color: COLORS.text.secondary }}>
-         {head}
+      <div className="flex-1 p-6 lg:p-10 bg-white/2">
+        <p
+          className="font-bold text-lg mb-6"
+          style={{ color: COLORS.text.secondary }}
+        >
+          {head}
         </p>
-        <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "10px" }}>
+        <ul className="list-none p-0 m-0 flex flex-col gap-4">
           {tips.map((tip, i) => (
             <li
               key={i}
-              style={{ display: "flex", alignItems: "flex-start", gap: "10px", fontSize: "16px", color: COLORS.text.white }}
+              className="flex items-start gap-3 text-base"
+              style={{ color: COLORS.text.white }}
             >
-              <span style={{ color: COLORS.status.success, marginTop: "1px", flexShrink: 0 }}>
-                <CheckIcon />
+              <span
+                className="shrink-0 mt-1"
+                style={{ color: COLORS.status.success }}
+              >
+                <CheckIcon size={20} />
               </span>
-              {tip}
+              <span className="leading-snug">{tip}</span>
             </li>
           ))}
         </ul>
       </div>
     </div>
   );
-}
+}

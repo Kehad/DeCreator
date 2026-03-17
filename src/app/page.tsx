@@ -92,48 +92,45 @@ const DecreatorHero: React.FC = () => {
         style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' /%3E%3C/svg%3E")` }}
       />
 
-      {/* Nav */}
-      <nav className="flex w-[100%]">
-      </nav> 
-        <TopNav />
+      <TopNav />
 
       {/* Hero */}
-      <section className="relative z-[2] flex flex-col items-center justify-center text-center px-6 py-32 min-h-[70vh]">
+      <section className="relative z-[2] flex flex-col items-center justify-center text-center px-6 py-20 md:py-32 min-h-[70vh]">
         {/* Glow Effect */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-red-600/10 blur-[100px] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[400px] bg-red-600/10 blur-[100px] pointer-events-none" />
 
-       
-
-        <h1 className="animate-fade-up [animation-delay:200ms] font-serif text-5xl md:text-7xl font-black leading-[1.05] tracking-tight max-w-[720px] mb-6">
+        <h1 className="animate-fade-up [animation-delay:200ms] font-serif text-4xl sm:text-5xl md:text-7xl font-black leading-[1.1] tracking-tight max-w-[800px] mb-6 px-2">
           Make your movies for <em className="italic text-[#e85046] not-italic">millions</em> of streamers
         </h1>
 
-        <p className="animate-fade-up [animation-delay:350ms] text-lg text-white/45 max-w-[420px] leading-relaxed font-light mb-10">
+        <p className="animate-fade-up [animation-delay:350ms] text-base md:text-lg text-white/45 max-w-[420px] leading-relaxed font-light mb-10">
           Decreator is here to help you with all you need to launch your movies
         </p>
 
         <div className="animate-fade-up [animation-delay:500ms] flex flex-wrap justify-center gap-3">
-          <Link href={PATH.dashboard} className="group bg-[#e85046] hover:bg-[#d43f35] text-white px-6 py-3 rounded-lg text-sm font-medium transition-all active:scale-95 flex items-center gap-2">
-            Add Movie <span className="transition-transform group-hover:translate-x-1">→</span>
+          <Link href={PATH.dashboard} className="group bg-[#e85046] hover:bg-[#d43f35] text-white px-8 py-4 rounded-xl text-sm font-bold transition-all active:scale-95 flex items-center gap-2 shadow-lg shadow-red-600/20">
+            Get Started <span className="transition-transform group-hover:translate-x-1">→</span>
           </Link>
-          
         </div>
 
-        <FilmStrip />
+        <div className="hidden lg:block">
+          <FilmStrip />
+        </div>
       </section>
 
       {/* Stats */}
-      <div ref={statsRef} className="animate-fade-up [animation-delay:700ms] relative z-[2] grid grid-cols-1 md:grid-cols-3 border-t border-white/10">
+      <div ref={statsRef} className="animate-fade-up [animation-delay:700ms] relative z-[2] grid grid-cols-1 md:grid-cols-3 border-t border-white/10 bg-black/20 backdrop-blur-sm">
         {STATS.map(({ value, label }) => (
-          <div key={label} className="stat-item relative overflow-hidden flex flex-col items-center py-10 px-4 border-b md:border-b-0 md:border-r border-white/10 last:border-0 hover:bg-white/[0.025] transition-colors cursor-default group">
-            <span className="font-serif text-4xl font-bold tracking-tighter mb-2">{value}</span>
-            <span className="text-xs text-white/40 tracking-wider text-center font-light uppercase">{label}</span>
-            <span className="stat-bar absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-[#e85046] transition-all duration-500 ease-out" />
+          <div key={label} className="stat-item relative overflow-hidden flex flex-col items-center py-12 md:py-16 px-6 border-b md:border-b-0 md:border-r border-white/10 last:border-0 hover:bg-white/[0.02] transition-colors cursor-default group">
+            <span className="font-serif text-4xl md:text-5xl font-bold tracking-tighter mb-3">{value}</span>
+            <span className="text-[10px] md:text-xs text-white/40 tracking-[0.2em] text-center font-bold uppercase">{label}</span>
+            <span className="stat-bar absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[3px] bg-[#e85046] transition-all duration-500 ease-out sm:group-hover:w-full" />
           </div>
-        ))}-
+        ))}
       </div>
     </div>
   );
 };
+
 
 export default DecreatorHero;

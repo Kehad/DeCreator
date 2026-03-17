@@ -6,27 +6,24 @@ interface FormActionsProps {
   onDiscard: () => void;
 }
 
-/**
- * FormActions
- * @param {function} onSave    - Save button handler
- * @param {function} onDiscard - Discard changes handler
- */
 export default function FormActions({ onSave, onDiscard }: FormActionsProps) {
   let progress = 60;
 
   return (
-    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" , padding: ""}}>
-      <Button
-        type="button"
-        variant="outline"
-        onClick={onDiscard}
-        style={{ padding: "10px 60px" }}
-      >
-        Discard changes
-      </Button>
+    <div className="flex flex-col sm:flex-row justify-between items-center gap-6 w-full">
+      <div className="w-full sm:w-auto order-2 sm:order-1">
+        <Button
+          type="button"
+          variant="outline"
+          onClick={onDiscard}
+          className="w-full sm:w-auto px-10 md:px-16"
+        >
+          Discard changes
+        </Button>
+      </div>
 
-      <div className="flex space-x-10">
-        <div className="hidden sm:flex items-center gap-2">
+      <div className="flex flex-col sm:flex-row items-center gap-6 md:gap-10 w-full sm:w-auto order-1 sm:order-2">
+        <div className="flex items-center gap-3">
           <div className="w-24 h-1 rounded-full bg-white/10 overflow-hidden">
             <div
               className="h-full bg-[#e85046] rounded-full transition-all duration-500"
@@ -44,7 +41,7 @@ export default function FormActions({ onSave, onDiscard }: FormActionsProps) {
         <Button
           type="submit"
           variant="primary"
-          style={{ padding: "10px 70px" }}
+          className="w-full sm:w-auto px-12 md:px-20"
         >
           Save
         </Button>
@@ -52,3 +49,4 @@ export default function FormActions({ onSave, onDiscard }: FormActionsProps) {
     </div>
   );
 }
+

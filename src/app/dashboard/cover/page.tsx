@@ -1,103 +1,103 @@
 "use client";
 
-import { useState, useRef, DragEvent, ChangeEvent } from "react";
+import { useState } from "react";
 import { COLORS } from "@/constants/colors";
-import { UploadZone } from "./modals/fileUpload";
 import { DESIGNERS, PRO_PERKS, TIPS } from "./modals/constant";
 import { DesignerAvatars } from "./modals/designAvatars";
 import { CheckIcon } from "@public/svg";
 import ManuscriptUploadCard from "@/component/card/manuscriptUploadCard";
 
-
-// ─── Main Component ───────────────────────────────────────────────────────────
-
 export default function CoverPage() {
-  const [preview, setPreview] = useState<string | null>(null);
-  const [fileName, setFileName] = useState<string | null>(null);
-  const [isDirty, setIsDirty] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-
-  const progress = preview ? 100 : 0;
-
-  const handleFileSelect = (file: File) => {
-    const url = URL.createObjectURL(file);
-    setPreview(url);
-    setFileName(file.name);
-    setIsDirty(true);
-  };
-
-  const handleDiscard = () => {
-    if (preview) URL.revokeObjectURL(preview);
-    setPreview(null);
-    setFileName(null);
-    setIsDirty(false);
-  };
 
   const handleSave = async () => {
     setIsSaving(true);
     await new Promise((r) => setTimeout(r, 900));
     setIsSaving(false);
-    setIsDirty(false);
   };
 
   return (
-    <div className="min-h-scree text-white flex flex-col" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+    <div className="flex-1 flex flex-col gap-6">
+      <h1 className="text-2xl font-bold" style={{ color: COLORS.text.main }}>
+        Cover
+      </h1>
 
-      {/* Page body */}
-      <main className="flex-1  w-full px-5 py-8 flex flex-col gap-5">
+      <ManuscriptUploadCard
+        tips={TIPS}
+        head="How to design a great movie cover"
+      />
 
-        {/* Heading */}
-        <h1 className="text-xl font-semibold tracking-tight text-white/90">Cover</h1>
-
-        {/* Upload card */}
-          <ManuscriptUploadCard tips={TIPS} head="How to design a great movie cover" />
-
-        {/* Pro designer card */}
-        <div className="rounded-xl border border-white/[0.07] bg-white/[0.03] p-5" style={{ backgroundColor: COLORS.background.card}}>
-          <div className="flex flex-col justify-between sm:flex-row sm:items-center gap-6">
-
-            {/* Left – copy */}
-            <div className="flex-1 flex flex-col gap-3 text-[20px] max-w-[50%]">
-              <p className=" text-white/60 leading-relaxed">
-                Get a professional cover for your movie with the help of one of the hundreds of curated designers.{" "}
-                <button className="text-[#e85046] hover:text-[#f06b62] transition-colors  font-medium underline-offset-2 hover:underline">
-                  View samples gallery
-                </button>
-              </p>
-
-              <ul className="flex flex-col gap-1.5">
-                {PRO_PERKS.map((perk) => (
-                  <li key={perk} className="flex items-center gap-2">
-                    <CheckIcon />
-                    <span className="text-white/50">{perk}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Right – order */}
-            <div className="flex flex-col items-center gap-3">
-              <DesignerAvatars designers={DESIGNERS} />
-              <p className="text-lg font-semibold text-white/90">$150</p>
+      {/* Pro designer card */}
+      <div
+        className="rounded-xl border border-white/5 p-6 md:p-10"
+        style={{ background: COLORS.background.card }}
+      >
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-10">
+          {/* Left – copy */}
+          <div className="flex-1 flex flex-col gap-6 max-w-full">
+            <p
+              className="text-lg md:text-xl leading-relaxed"
+              style={{ color: COLORS.text.secondary }}
+            >
+              Get a professional cover for your movie with the help of one of
+              the hundreds of curated designers.{" "}
               <button
-                className="
-                  px-5 py-2 rounded-md
-                  border border-[#e85046]/70
-                  text-[#e85046] text-sm font-medium
-                  hover:bg-[#e85046] hover:text-white
-                  active:scale-[0.97]
-                  transition-all duration-150
+                className="hover:underline transition-colors font-semibold"
+                style={{ color: COLORS.primary }}
+              >
+                View samples gallery
+              </button>
+            </p>
+
+            <ul className="flex flex-col gap-3">
+              {PRO_PERKS.map((perk) => (
+                <li key={perk} className="flex items-center gap-3">
+                  <CheckIcon />
+                  <span className="text-base" style={{ color: COLORS.text.muted }}>
+                    {perk}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Right – order */}
+          <div className="flex flex-col items-center lg:items-end gap-6 w-full lg:w-auto shrink-0 py-6 lg:py-0 border-t lg:border-t-0 border-white/10">
+            <div className="flex flex-col items-center lg:items-end gap-2">
+              <DesignerAvatars designers={DESIGNERS} />
+              <p
+                className="text-2xl font-bold"
+                style={{ color: COLORS.text.main }}
+              >
+                $150
+              </p>
+            </div>
+            <button
+              className="
+                  w-full lg:w-48 px-8 py-3 rounded-lg
+                  border font-bold text-base
+                  active:scale-[0.98]
+                  transition-all duration-200
                   whitespace-nowrap
                 "
-              >
-                Place order
-              </button>
-            </div>
+              style={{
+                borderColor: COLORS.primary,
+                color: COLORS.primary,
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = COLORS.primary;
+                e.currentTarget.style.color = "white";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "transparent";
+                e.currentTarget.style.color = COLORS.primary;
+              }}
+            >
+              Place order
+            </button>
           </div>
         </div>
-      </main>
-
-    
+      </div>
     </div>
   );
 }

@@ -17,17 +17,6 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   fullWidth?: boolean;
 }
 
-/**
- * Reusable Button Component
- * 
- * @param {ReactNode} children - Button label/content
- * @param {ButtonVariant} variant - Styled variant (default: "primary")
- * @param {ButtonSize} size - Button size (default: "md")
- * @param {boolean} loading - Shows a loading spinner and disables the button
- * @param {ReactNode} iconLeft - Optional icon on the left
- * @param {ReactNode} iconRight - Optional icon on the right
- * @param {boolean} fullWidth - If true, button takes 100% width
- */
 export default function Button({
   children,
   variant = "primary",
@@ -38,12 +27,12 @@ export default function Button({
   fullWidth = false,
   disabled,
   style,
+  className = "",
   ...props
 }: ButtonProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [isActive, setIsActive] = useState(false);
 
-  // Define base styles for each variant
   const getVariantStyles = (): React.CSSProperties => {
     switch (variant) {
       case "primary":
@@ -84,16 +73,22 @@ export default function Button({
     }
   };
 
-  // Define size-specific padding and font size
   const getSizeStyles = (): React.CSSProperties => {
+    // Only apply padding inline if not provided via className (simple check for px- or p-)
+    const hasPaddingClass = className.includes("px-") || className.includes("p-") || className.includes("py-");
+    
+    if (hasPaddingClass) {
+      switch (size) {
+        case "sm": return { fontSize: "12px" };
+        case "lg": return { fontSize: "15px" };
+        case "md": default: return { fontSize: "13px" };
+      }
+    }
+
     switch (size) {
-      case "sm":
-        return { padding: "6px 12px", fontSize: "12px" };
-      case "lg":
-        return { padding: "12px 32px", fontSize: "15px" };
-      case "md":
-      default:
-        return { padding: "9px 22px", fontSize: "13px" };
+      case "sm": return { padding: "6px 12px", fontSize: "12px" };
+      case "lg": return { padding: "12px 32px", fontSize: "15px" };
+      case "md": default: return { padding: "9px 22px", fontSize: "13px" };
     }
   };
 
@@ -103,11 +98,11 @@ export default function Button({
     justifyContent: "center",
     gap: "8px",
     borderRadius: "6px",
-    cursor: (disabled || loading) ? "not-allowed" : "pointer",
-    fontWeight: 500,
+    cursor: disabled || loading ? "not-allowed" : "pointer",
+    fontWeight: 700,
     transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
-    opacity: (disabled || loading) ? 0.6 : isActive ? 0.9 : 1,
-    width: fullWidth ? "100%" : "auto",
+    opacity: disabled || loading ? 0.6 : isActive ? 0.9 : 1,
+    width: fullWidth ? "100%" : className.includes("w-") ? undefined : "auto",
     outline: "none",
     userSelect: "none",
     transform: isActive ? "scale(0.98)" : "scale(1)",
@@ -119,6 +114,7 @@ export default function Button({
   return (
     <button
       {...props}
+      className={className}
       disabled={disabled || loading}
       style={baseStyles}
       onMouseEnter={() => !disabled && !loading && setIsHovered(true)}
@@ -129,17 +125,32 @@ export default function Button({
       onMouseDown={() => !disabled && !loading && setIsActive(true)}
       onMouseUp={() => setIsActive(false)}
     >
-      {loading && <Loader2 size={16} className="animate-spin" style={{ animation: "spin 1s linear infinite" }} />}
-      {!loading && iconLeft && <span style={{ display: "flex", alignItems: "center" }}>{iconLeft}</span>}
-      <span style={{ whiteSpace: "nowrap" }}>{children}</span>
-      {!loading && iconRight && <span style={{ display: "flex", alignItems: "center" }}>{iconRight}</span>}
-      
-      <style dangerouslySetInnerHTML={{ __html: `
+      {loading && (
+        <Loader2
+          size={16}
+          className="animate-spin"
+          style={{ animation: "spin 1s linear infinite" }}
+        />
+      )}
+      {!loading && iconLeft && (
+        <span className="flex items-center shrink-0">{iconLeft}</span>
+      )}
+      <span className="whitespace-nowrap">{children}</span>
+      {!loading && iconRight && (
+        <span className="flex items-center shrink-0">{iconRight}</span>
+      )}
+
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
         @keyframes spin {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
         }
-      `}} />
+      `,
+        }}
+      />
     </button>
   );
 }
+

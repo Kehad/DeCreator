@@ -1,3 +1,4 @@
+"use client";
 import { BellIcon } from "lucide-react";
 import { COLORS } from "../../constants/colors";
 import NextImage from "next/image";
@@ -5,90 +6,82 @@ import logo from "@public/png/logo.png";
 import Link from "next/link";
 import { PATH } from "@/constants/path";
 
-
 const NAV_ITEMS = ["Dashboard", "Movies", "Sales"];
 
 interface TopNavProps {
   activeTab?: string;
-  isLogo?: boolean
+  isLogo?: boolean;
 }
 
 function Logo() {
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: "8px", padding: "20px 8px 24px" }}>
-      <NextImage src={logo} alt="Logo" width={200} height={40} style={{ width: "auto", height: "auto" }} />
+    <div className="flex items-center gap-2 py-5 px-2">
+      <NextImage
+        src={logo}
+        alt="Logo"
+        width={150}
+        height={30}
+        className="w-auto h-auto max-w-[120px] md:max-w-none"
+      />
     </div>
   );
 }
 
-/**
- * TopNav
- * @param {string} activeTab - Currently active tab label
- */
 export default function TopNav({ activeTab = "Movies", isLogo = true }: TopNavProps) {
   return (
     <header
+      className="flex items-center h-[75px] border-b px-4 md:px-8 gap-4 md:gap-8 sticky top-0 z-20"
       style={{
-        height: "75px",
-        borderBottom: `1px solid ${COLORS.border.dark}`,
-        display: "flex",
-        alignItems: "center",
-        padding: "0 32px",
-        gap: "32px",
+        borderBottomColor: COLORS.border.dark,
         background: COLORS.background.main,
-        flexShrink: 0,
       }}
     >
-
       {isLogo && <Logo />}
 
-      {NAV_ITEMS.map((item) => {
-        const isActive = item === activeTab;
-        const href = item === "Movies" ? PATH.movieDetails : PATH.dashboard;
-        return (
-          <Link
-            key={item}
-            href={href}
-            style={{
-              textDecoration: "none",
-              color: isActive ? COLORS.text.main : COLORS.text.muted,
-              fontSize: "16px",
-              cursor: "pointer",
-              fontWeight: isActive ? 600 : 400,
-              padding: "12px 12px",
-              // borderBottom: isActive ? `2px solid ${COLORS.primary}` : "2px solid transparent",
-            }}
-          >
-            {item}
-          </Link>
-        );
-      })}
+      <nav className="hidden md:flex items-center gap-2">
+        {NAV_ITEMS.map((item) => {
+          const isActive = item === activeTab;
+          const href = item === "Movies" ? PATH.movieDetails : PATH.dashboard;
+          return (
+            <Link
+              key={item}
+              href={href}
+              className={`px-3 py-3 text-sm md:text-base font-medium transition-colors ${
+                isActive ? "text-white font-semibold" : "text-gray-400 hover:text-white"
+              }`}
+              style={{
+                textDecoration: "none",
+              }}
+            >
+              {item}
+            </Link>
+          );
+        })}
+      </nav>
 
-      {/* <div style={{ flex: 1 }} /> */}
-      <div style={{ display: "flex", alignItems: "center", gap: "16px", justifyContent: "flex-end", flex: 1 }}>
-        <button style={{ background: "none", border: "none", color: "#888", cursor: "pointer", padding: "6px" }}>
-          <BellIcon />
+      {/* Mobile view indicator for active tab if on mobile and no logo */}
+      {!isLogo && (
+        <div className="md:hidden font-medium text-white truncate text-sm">
+          {activeTab}
+        </div>
+      )}
+
+      <div className="flex flex-1 items-center justify-end gap-3 md:gap-4">
+        <button className="p-2 text-gray-400 hover:text-white transition-colors bg-transparent border-none cursor-pointer">
+          <BellIcon size={20} />
         </button>
 
         {/* Avatar */}
         <div
+          className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0"
           style={{
-            width: "32px",
-            height: "32px",
             background: COLORS.border.light,
-            borderRadius: "50%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: "12px",
-            fontWeight: 700,
             color: COLORS.text.secondary,
           }}
         >
           CO
         </div>
       </div>
-
     </header>
   );
-}
+}
