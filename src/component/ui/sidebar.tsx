@@ -13,6 +13,7 @@ import { ReactNode } from "react";
 import { SoundIcon } from "@public/svg";
 
 import { PATH } from "@/constants/path";
+import Image from "next/image";
 
 interface SectionLabelProps {
   children: ReactNode;
@@ -38,7 +39,7 @@ function SectionLabel({ children }: SectionLabelProps) {
 function Logo() {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: "8px", padding: "20px 8px 24px" }}>
-      <NextImage src={logo} alt="Logo" width={200} height={40} style={{ width: "auto", height: "auto" }} />
+      <Image src={logo} alt="Logo" width={200} height={40} style={{ width: "auto", height: "auto" }} />
     </div>
   );
 }
