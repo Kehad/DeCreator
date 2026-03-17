@@ -47,21 +47,6 @@ export default function SoundEffectsPage() {
                         <PeakMeters bars={bars} />
                     </div>
 
-                    {/* Monitor toggle */}
-                    {/* <button
-                        onClick={() => setMonitorEnabled((v) => !v)}
-                        className={`
-              self-start flex items-center gap-2.5 px-4 py-2.5 rounded-lg text-sm
-              border transition-all duration-150
-              ${monitorEnabled
-                                ? "border-amber-400/30 bg-amber-400/5 text-amber-300/80"
-                                : "border-white/10 bg-white/[0.03] text-white/40 hover:border-white/20"
-                            }
-            `}
-                    >
-                        <MessageCircleWarningIcon />
-                        Monitor levels to prevent clipping distortion
-                    </button> */}
 
                     <FooterSoundEffects onMonitor={() => setMonitorEnabled((v) => !v)} text=" Monitor levels to prevent clipping distortion" icon="ⓘ" />
                 </main>

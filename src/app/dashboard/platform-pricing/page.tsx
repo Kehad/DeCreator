@@ -1,39 +1,56 @@
-"use client";
+import { PricingCard, PricingCardProps } from "./pricingCard";
 
-import { COLORS } from "@/constants/colors";
-import { DollarSignIcon } from "lucide-react";
+export default function PlatformPricing() {
+  const platforms: PricingCardProps[] = [
+    {
+      platform: "Netflix",
+      middleLabel: "Sales agent fee",
+      middleValue: "$150",
+      middleLink: "Contact sales agent",
+      rightLabel: "Licensing fee",
+      rightValue: "$40,000",
+      rightLink: "About licensing",
+      tooltip: "Stand a chance to win a festival from Netflix on the 22nd of October."
+    },
+    {
+      platform: "Amazon prime video",
+      middleLabel: "Professional charges",
+      middleValue: "$150",
+      middleLink: "See more",
+      rightLabel: "Royalty per hour",
+      rightValue: "$0.5",
+      rightLink: "About royalties"
+    },
+    {
+      platform: "Apple Tv",
+      middleLabel: "Producer fee",
+      middleValue: "$1,500",
+      middleLink: "See more",
+      rightLabel: "Platform cut",
+      rightValue: "20%",
+      rightLink: "more"
+    },
+    {
+      platform: "Disney+",
+      middleLabel: "Sales agent fee",
+      middleValue: "10%",
+      middleLink: "See more",
+      rightLabel: "Royalty per hour",
+      rightValue: "20%",
+      rightLink: "more"
+    }
+  ];
 
-export default function PlatformPricingPage() {
   return (
-    <main style={{ flex: 1, padding: "32px 40px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "80vh" }}>
-      <div style={{ 
-        background: "#FB374811", 
-        padding: "40px", 
-        borderRadius: "24px", 
-        textAlign: "center",
-        border: "1px solid #FB374822",
-        maxWidth: "500px"
-      }}>
-        <div style={{ 
-          width: "80px", 
-          height: "80px", 
-          background: COLORS.primary, 
-          borderRadius: "20px", 
-          display: "flex", 
-          alignItems: "center", 
-          justifyContent: "center", 
-          margin: "0 auto 24px",
-          boxShadow: "0 10px 20px -5px #FB374844"
-        }}>
-          <DollarSignIcon size={40} color="white" />
+    <div className="font-sans">
+      <div className="">
+        <h1 className="text-gray-300 text-xl font-semibold mb-8">Platform pricing</h1>
+        <div className="space-y-6">
+          {platforms.map((item, index) => (
+            <PricingCard key={index} {...item} />
+          ))}
         </div>
-        <h1 style={{ fontSize: "28px", fontWeight: 700, marginBottom: "16px", color: COLORS.text.main }}>
-          Platform Pricing
-        </h1>
-        <p style={{ color: COLORS.text.secondary, lineHeight: "1.6", fontSize: "16px" }}>
-          Configure your movie's pricing across different steaming platforms. Set your subscription tiers and rental fees.
-        </p>
       </div>
-    </main>
+    </div>
   );
 }

@@ -1,25 +1,25 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Crimson_Text } from "next/font/google";
-import localFont from 'next/font/local';
+// import { Geist, Geist_Mono, Crimson_Text } from "next/font/google";
+// import localFont from 'next/font/local';
 import "./globals.css";
 // import DashboardLayout from "./layout/page";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+// const geistSans = Geist({
+//   variable: "--font-geist-sans",
+//   subsets: ["latin"],
+// });
 
 // const myFont = localFont({
 //   src: '@public/font/CrimsonText-Regular.ttf' ,
 //   variable: "--font-crimson-text",
 // })
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// const geistMono = Geist_Mono({
+//   variable: "--font-geist-mono",
+//   subsets: ["latin"],
+// });
 
-// const crimsonTex = localFont({
+// // const crimsonTex = localFont({
 //   src: [
 //     {
 //       path: '@public/font/CrimsonText-Regular.ttf',
@@ -45,11 +45,11 @@ const geistMono = Geist_Mono({
 //   variable: "--font-crimson-text",
 // })
 
-const crimsonText = Crimson_Text({
-  variable: "--font-crimson-text",
-  subsets: ["latin"],
-  weight: ["400", "600", "700"],
-});
+// const crimsonText = Crimson_Text({
+//   variable: "--font-crimson-text",
+//   subsets: ["latin"],
+//   weight: ["400", "600", "700"],
+// });
 
 export const metadata: Metadata = {
   title: "DeCreator",
@@ -64,7 +64,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${crimsonText.variable} antialiased` }
+        className={` antialiased` }
+        // className={`${geistSans.variable} ${geistMono.variable} antialiased` }
       >
         {children}
         {/* <DashboardLayout>{children}</DashboardLayout> */}

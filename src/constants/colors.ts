@@ -21,7 +21,7 @@ export const COLORS = {
     error: "#c0192a",
   },
   special: {
-    tooltipBg: "#f5f0d8",
+    tooltipBg: "#c4c99c]",
   }
 } as const;
 
