@@ -66,6 +66,7 @@ export default function Sidebar({ activeItem = "Movie Details" }: SidebarProps) 
         flexDirection: "column",
         padding: "0 8px 16px",
         overflowY: "auto",
+        height: "100vh",
       }}
     >
       <Logo />
